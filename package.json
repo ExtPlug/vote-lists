@@ -6,6 +6,9 @@
   "keywords": [
     "extplug-plugin"
   ],
+  "dependencies": {
+    "backbone-filtered-collection": "^0.4.0"
+  },
   "devDependencies": {
     "del": "^1.2.0",
     "gulp": "^3.8.11",

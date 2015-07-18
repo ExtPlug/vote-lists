@@ -33,7 +33,9 @@ gulp.task('rjs', function (done) {
     underscore: 'empty:',
     // libraries used by extplug
     meld: 'empty:',
-    'plug-modules': 'empty:'
+    'plug-modules': 'empty:',
+    // libraries used by vote-lists
+    'filtered-collection': 'node_modules/backbone-filtered-collection/backbone-filtered-collection'
   }
 
   paths[pluginPath] = 'lib/'
