@@ -3,6 +3,8 @@ define(function (require, exports, module) {
   const grab = '#aa74ff'
   const meh = '#c42e3b'
 
+  const height = 250
+
   module.exports = {
     // border colours etc
     '.extplug-vote-list.woot': {
@@ -22,11 +24,11 @@ define(function (require, exports, module) {
       '.header': { 'background': meh }
     },
     '.extplug-vote-list': {
-      'height': '300px',
+      'height': `${height}px`,
       'width': '254px',
       'position': 'absolute',
       'background': '#282c35',
-      'top': '-300px',
+      'top': `-${height}px`,
       'border': '3px solid transparent',
       'border-radius': '4px 4px 0 0',
       'box-sizing': 'border-box',
@@ -52,7 +54,7 @@ define(function (require, exports, module) {
         }
       },
       '.list': {
-        'height': '264px',
+        'height': `${height - 36}px`,
 
         '.user': {
           'height': '30px',
@@ -70,20 +72,8 @@ define(function (require, exports, module) {
             'font-size': '14px'
           },
 
-          '.icon-woot': {
-            'top': '-1px',
-            'right': '9px',
-            'left': 'auto'
-          },
-          '.icon-grab': {
-            'top': '-1px',
-            'right': '9px',
-            'left': 'auto'
-          },
-          '.icon-meh': {
-            'top': '-1px',
-            'right': '9px',
-            'left': 'auto'
+          '.name ~ i.icon': {
+            'display': 'none'
           }
         },
 
