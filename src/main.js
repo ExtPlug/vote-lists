@@ -2,46 +2,9 @@ define(function (require, exports, module) {
 
   const Plugin = require('extplug/Plugin')
   const users = require('plug/collections/users')
-  const { role: roleComparator } = require('plug/util/comparators')
-  const UserRowView = require('plug/views/rooms/users/RoomUserRowView')
-  const UserListView = require('plug/views/rooms/users/RoomUsersListView')
   const Lang = require('lang/Lang')
-  const { throttle } = require('underscore')
-  const FilteredCollection = require('filtered-collection')
-
-  const VoteListView = UserListView.extend({
-    RowClass: UserRowView,
-    initialize() {
-      this._super()
-      this.draw = throttle(this.draw, 120)
-      this.collection.on('change:vote change:grab', this.draw, this)
-    },
-    remove() {
-      this.collection.off('change:vote change:grab', this.draw)
-    }
-  })
-
-  // using a plain class because FilteredCollection isn't a real Backbone
-  // Collection
-  class OnceFilteredCollection extends FilteredCollection {
-    // sets a single filter by replacing the current one instead of always
-    // adding new ones.
-    // this saves a filter run because FilteredCollection immediately refilters
-    // after removing a filter, and then again after adding a new filter.
-    setFilter(filter) {
-      if (this.hasFilter(this.defaultFilterName)) {
-        this._filters[this.defaultFilterName] = {
-          fn: filter,
-          keys: null
-        }
-        this.refilter()
-      }
-      else {
-        this.filterBy(filter)
-      }
-      return this
-    }
-  }
+  const FilteredCollection = require('./OnceFilteredCollection')
+  const VoteListView = require('./VoteListView')
 
   const filters = {
     woot: user => user.get('vote') === 1,
@@ -67,7 +30,7 @@ define(function (require, exports, module) {
       $('#vote')
         .on('mouseleave', this.onLeave)
 
-      this.users = new OnceFilteredCollection(users)
+      this.users = new FilteredCollection(users)
 
       this.$wrap = $('<div />').addClass('extplug-vote-list')
       this.$header = $('<div />').addClass('header')

@@ -35,7 +35,7 @@ gulp.task('rjs', function (done) {
     meld: 'empty:',
     'plug-modules': 'empty:',
     // libraries used by vote-lists
-    'filtered-collection': 'node_modules/backbone-filtered-collection/backbone-filtered-collection'
+    'backbone-filtered-collection': 'node_modules/backbone-filtered-collection/backbone-filtered-collection'
   }
 
   paths[pluginPath] = 'lib/'
