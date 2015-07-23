@@ -65,6 +65,7 @@ define(function (require, exports, module) {
 
       this.$wrap.removeClass('woot grab meh')
         .addClass(type)
+      // the *-disabled classes are white icons
       this.$icon.removeClass()
         .addClass(`icon icon-${type}-disabled`)
       this.$title

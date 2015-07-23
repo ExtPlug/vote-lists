@@ -2,8 +2,10 @@ define(function (require, exports, module) {
 
   const FilteredCollection = require('backbone-filtered-collection')
 
-  // using a plain class because FilteredCollection isn't a real Backbone
-  // Collection
+  // FilteredCollection is a relatively fast auto-syncing auto-filtering
+  // collection wrapper.
+  // using a plain class here because FilteredCollection isn't a real Backbone
+  // Collection.
   class OnceFilteredCollection extends FilteredCollection {
     // sets a single filter by replacing the current one instead of always
     // adding new ones.

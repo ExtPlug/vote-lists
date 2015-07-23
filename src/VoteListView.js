@@ -9,6 +9,7 @@ define(function (require, exports, module) {
     initialize() {
       this._super()
       this.draw = throttle(this.draw, 120)
+      // TODO _probably_ unnecessary--FilteredCollection should deal with this?
       this.collection.on('change:vote change:grab', this.draw, this)
     },
     remove() {
