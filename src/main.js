@@ -15,7 +15,7 @@ define(function (require, exports, module) {
 
   const VoteLists = Plugin.extend({
     name: 'Vote Lists',
-    description: '',
+    description: 'Shows a list of users when hovering vote buttons.',
 
     init(id, ext) {
       this._super(id, ext)

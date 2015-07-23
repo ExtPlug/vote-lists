@@ -1,7 +1,9 @@
 Vote Lists
 ==========
 
+ExtPlug plugin that shows a list of users when hovering vote buttons.
 
+![Screenshot](http://i.imgur.com/AFN6LOs.png)
 
 ## Installation
 
