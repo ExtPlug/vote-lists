@@ -17,6 +17,8 @@ define(function (require, exports, module) {
     name: 'Vote Lists',
     description: 'Shows a list of users when hovering vote buttons.',
 
+    style: require('./style'),
+
     init(id, ext) {
       this._super(id, ext)
 
@@ -43,17 +45,19 @@ define(function (require, exports, module) {
       this.view.render()
 
       $('#vote').append(this.$wrap)
-
-      this.Style(require('./style'))
     },
 
     disable() {
+      this.users.destroy()
       this.view.destroy()
       this.$wrap.remove()
       $('#vote .crowd-response')
         .off('mouseenter', this.onEnter)
       $('#vote')
         .off('mouseleave', this.onLeave)
+
+      this.view = null
+      this.users = null
     },
 
     onEnter(e) {
