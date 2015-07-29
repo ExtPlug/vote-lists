@@ -9,19 +9,39 @@ define(function (require, exports, module) {
     // border colours etc
     '.extplug-vote-list.woot': {
       'border-color': woot,
-      'border-bottom-right-radius': '4px',
       '.header': { 'background': woot }
     },
     '.extplug-vote-list.grab': {
       'border-color': grab,
-      'border-bottom-left-radius': '4px',
-      'border-bottom-right-radius': '4px',
       '.header': { 'background': grab }
     },
     '.extplug-vote-list.meh': {
       'border-color': meh,
-      'border-bottom-left-radius': '4px',
       '.header': { 'background': meh }
+    },
+    // corners in normal mode
+    '#room:not(.video-only)': {
+      '.extplug-vote-list.woot': {
+        'border-bottom-right-radius': '4px',
+      },
+      '.extplug-vote-list.grab': {
+        'border-bottom-left-radius': '4px',
+        'border-bottom-right-radius': '4px'
+      },
+      '.extplug-vote-list.meh': {
+        'border-bottom-left-radius': '4px'
+      }
+    },
+    '.video-only': {
+      // ensure that the list is large enough to view, even if vote buttons
+      // are narrower than expected
+      '.extplug-vote-list': {
+        'min-width': '200px',
+      },
+      // rounded corner if the list is larger than the button
+      '.extplug-vote-list.corner': {
+        'border-bottom-right-radius': '4px',
+      }
     },
     '.extplug-vote-list': {
       'height': `${height}px`,

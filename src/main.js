@@ -5,6 +5,7 @@ define(function (require, exports, module) {
   const Lang = require('lang/Lang')
   const FilteredCollection = require('./OnceFilteredCollection')
   const VoteListView = require('./VoteListView')
+  const plugSettings = require('extplug/store/settings')
 
   const filters = {
     woot: user => user.get('vote') === 1,
@@ -75,6 +76,22 @@ define(function (require, exports, module) {
       this.$title
         .text(Lang.vote[type])
       this.$wrap.css('display', 'block')
+
+      if (plugSettings.get('videoOnly')) {
+        // cover only a single vote button
+        let width = vote.width()
+        this.$wrap
+          .css('left', `${vote.position().left}px`)
+          .css('width', `${width}px`)
+
+        this.$wrap.toggleClass('corner', width < 200)
+      }
+      else {
+        // cover entire vote area
+        this.$wrap
+          .removeClass('corner')
+          .css({ left: '', width: '' })
+      }
 
       this.users.setFilter(filters[type])
       this.view.draw()
