@@ -431,19 +431,36 @@ define('extplug/vote-lists/style',['require','exports','module'],function (requi
     // border colours etc
     '.extplug-vote-list.woot': {
       'border-color': woot,
-      'border-bottom-right-radius': '4px',
       '.header': { 'background': woot }
     },
     '.extplug-vote-list.grab': {
       'border-color': grab,
-      'border-bottom-left-radius': '4px',
-      'border-bottom-right-radius': '4px',
       '.header': { 'background': grab }
     },
     '.extplug-vote-list.meh': {
       'border-color': meh,
-      'border-bottom-left-radius': '4px',
       '.header': { 'background': meh }
+    },
+    // corners in normal mode
+    '#room:not(.video-only)': {
+      '.extplug-vote-list.woot': {
+        'border-bottom-right-radius': '4px' },
+      '.extplug-vote-list.grab': {
+        'border-bottom-left-radius': '4px',
+        'border-bottom-right-radius': '4px'
+      },
+      '.extplug-vote-list.meh': {
+        'border-bottom-left-radius': '4px'
+      }
+    },
+    '.video-only': {
+      // ensure that the list is large enough to view, even if vote buttons
+      // are narrower than expected
+      '.extplug-vote-list': {
+        'min-width': '200px' },
+      // rounded corner if the list is larger than the button
+      '.extplug-vote-list.corner': {
+        'border-bottom-right-radius': '4px' }
     },
     '.extplug-vote-list': {
       'height': '' + height + 'px',
@@ -517,13 +534,14 @@ define('extplug/vote-lists/style',['require','exports','module'],function (requi
 });
 
 
-define('extplug/vote-lists/main',['require','exports','module','extplug/Plugin','plug/collections/users','lang/Lang','./OnceFilteredCollection','./VoteListView','./style'],function (require, exports, module) {
+define('extplug/vote-lists/main',['require','exports','module','extplug/Plugin','plug/collections/users','lang/Lang','./OnceFilteredCollection','./VoteListView','extplug/store/settings','./style'],function (require, exports, module) {
 
   var Plugin = require('extplug/Plugin');
   var users = require('plug/collections/users');
   var Lang = require('lang/Lang');
   var FilteredCollection = require('./OnceFilteredCollection');
   var VoteListView = require('./VoteListView');
+  var plugSettings = require('extplug/store/settings');
 
   var filters = {
     woot: function woot(user) {
@@ -543,6 +561,8 @@ define('extplug/vote-lists/main',['require','exports','module','extplug/Plugin',
   var VoteLists = Plugin.extend({
     name: 'Vote Lists',
     description: 'Shows a list of users when hovering vote buttons.',
+
+    style: require('./style'),
 
     init: function init(id, ext) {
       this._super(id, ext);
@@ -567,16 +587,18 @@ define('extplug/vote-lists/main',['require','exports','module','extplug/Plugin',
       this.$wrap.append(this.view.$el);
       this.view.render();
 
-      $('#vote').append(this.$wrap);
-
-      this.Style(require('./style'));
+      $('#vote').prepend(this.$wrap);
     },
 
     disable: function disable() {
+      this.users.destroy();
       this.view.destroy();
       this.$wrap.remove();
       $('#vote .crowd-response').off('mouseenter', this.onEnter);
       $('#vote').off('mouseleave', this.onLeave);
+
+      this.view = null;
+      this.users = null;
     },
 
     onEnter: function onEnter(e) {
@@ -591,6 +613,17 @@ define('extplug/vote-lists/main',['require','exports','module','extplug/Plugin',
       this.$icon.removeClass().addClass('icon icon-' + type + '-disabled');
       this.$title.text(Lang.vote[type]);
       this.$wrap.css('display', 'block');
+
+      if (plugSettings.get('videoOnly')) {
+        // cover only a single vote button
+        var width = vote.width();
+        this.$wrap.css('left', '' + vote.position().left + 'px').css('width', '' + width + 'px');
+
+        this.$wrap.toggleClass('corner', width < 200);
+      } else {
+        // cover entire vote area
+        this.$wrap.removeClass('corner').css({ left: '', width: '' });
+      }
 
       this.users.setFilter(filters[type]);
       this.view.draw();
