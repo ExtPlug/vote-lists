@@ -44,7 +44,7 @@ define(function (require, exports, module) {
       this.$wrap.append(this.view.$el)
       this.view.render()
 
-      $('#vote').append(this.$wrap)
+      $('#vote').prepend(this.$wrap)
     },
 
     disable() {
