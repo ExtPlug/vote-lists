@@ -6,6 +6,7 @@ define(function (require, exports, module) {
   const FilteredCollection = require('./OnceFilteredCollection')
   const VoteListView = require('./VoteListView')
   const plugSettings = require('extplug/store/settings')
+  const $ = require('jquery')
 
   const filters = {
     woot: user => user.get('vote') === 1,
