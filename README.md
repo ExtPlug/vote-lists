@@ -16,6 +16,11 @@ You can install this plugin by going to your ExtPlug settings menu, pressing
 https://extplug.github.io/vote-lists/build/vote-lists.js;extplug/vote-lists/main
 ```
 
+## Alternative Designs
+
+Several alternative [Stylish](https://userstyles.org/) userstyles for this
+plugin can be found on the [Wiki](https://github.com/ExtPlug/vote-lists/wiki/Alternative-Designs).
+
 ## Building
 
 **Note: this section is intended for developers only.**
