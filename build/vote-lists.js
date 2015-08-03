@@ -394,17 +394,28 @@ define('extplug/vote-lists/OnceFilteredCollection',['require','exports','module'
 });
 
 
-define('extplug/vote-lists/VoteListView',['require','exports','module','plug/views/rooms/users/RoomUsersListView','plug/views/rooms/users/RoomUserRowView','underscore'],function (require, exports, module) {
+define('extplug/vote-lists/VoteListView',['require','exports','module','plug/views/rooms/users/RoomUsersListView','plug/views/rooms/users/RoomUserRowView','plug/core/Events','plug/events/ShowUserRolloverEvent','underscore'],function (require, exports, module) {
 
   var UserListView = require('plug/views/rooms/users/RoomUsersListView');
   var UserRowView = require('plug/views/rooms/users/RoomUserRowView');
+  var Events = require('plug/core/Events');
+  var RolloverEvent = require('plug/events/ShowUserRolloverEvent');
 
   var _require = require('underscore');
 
   var throttle = _require.throttle;
 
+  var VoteRowView = UserRowView.extend({
+    onClick: function onClick() {
+      Events.dispatch(new RolloverEvent(RolloverEvent.SHOW, this.model, {
+        x: this.$el.parents('.extplug-vote-list').offset().left - 5,
+        y: this.$el.offset().top + 1
+      }, true));
+    }
+  });
+
   var VoteListView = UserListView.extend({
-    RowClass: UserRowView,
+    RowClass: VoteRowView,
     initialize: function initialize() {
       this._super();
       this.draw = throttle(this.draw, 120);
@@ -534,7 +545,7 @@ define('extplug/vote-lists/style',['require','exports','module'],function (requi
 });
 
 
-define('extplug/vote-lists/main',['require','exports','module','extplug/Plugin','plug/collections/users','lang/Lang','./OnceFilteredCollection','./VoteListView','extplug/store/settings','./style'],function (require, exports, module) {
+define('extplug/vote-lists/main',['require','exports','module','extplug/Plugin','plug/collections/users','lang/Lang','./OnceFilteredCollection','./VoteListView','extplug/store/settings','jquery','./style'],function (require, exports, module) {
 
   var Plugin = require('extplug/Plugin');
   var users = require('plug/collections/users');
@@ -542,6 +553,7 @@ define('extplug/vote-lists/main',['require','exports','module','extplug/Plugin',
   var FilteredCollection = require('./OnceFilteredCollection');
   var VoteListView = require('./VoteListView');
   var plugSettings = require('extplug/store/settings');
+  var $ = require('jquery');
 
   var filters = {
     woot: function woot(user) {
