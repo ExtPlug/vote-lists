@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     name: 'Vote Lists',
     description: 'Shows a list of users when hovering vote buttons.',
 
-    style: require('./style'),
+    style: require('./style.css'),
 
     init(id, ext) {
       this._super(id, ext)
