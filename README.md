@@ -1,6 +1,8 @@
 Vote Lists
 ==========
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/extplug/vote-lists.svg)](https://greenkeeper.io/)
+
 ExtPlug plugin that shows a list of users when hovering vote buttons.
 
 ![Screenshot](http://i.imgur.com/AFN6LOs.png)
