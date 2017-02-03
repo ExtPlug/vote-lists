@@ -1,6 +1,6 @@
 {
   "name": "extplug-vote-lists",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "ExtPlug plugin that shows a list of users when hovering vote buttons.",
   "author": "ReAnna <renee@kooi.me>",
