@@ -8,26 +8,26 @@ import VoteListView from './VoteListView'
 import style from './style.css'
 
 const filters = {
-  woot: user => user.get('vote') === 1,
-  meh:  user => user.get('vote') === -1,
-  grab: user => user.get('grab') === true,
-  hide: user => false
+  woot: (user) => user.get('vote') === 1,
+  meh: (user) => user.get('vote') === -1,
+  grab: (user) => user.get('grab') === true,
+  hide: (user) => false
 }
 
 const VoteLists = Plugin.extend({
   name: 'Vote Lists',
   description: 'Shows a list of users when hovering vote buttons.',
 
-  style: style,
+  style,
 
-  init(id, ext) {
+  init (id, ext) {
     this._super(id, ext)
 
     this.onEnter = this.onEnter.bind(this)
     this.onLeave = this.onLeave.bind(this)
   },
 
-  enable() {
+  enable () {
     $('#vote .crowd-response')
       .on('mouseenter', this.onEnter)
     $('#vote')
@@ -48,7 +48,7 @@ const VoteLists = Plugin.extend({
     $('#vote').prepend(this.$wrap)
   },
 
-  disable() {
+  disable () {
     this.users.destroy()
     this.view.destroy()
     this.$wrap.remove()
@@ -61,9 +61,9 @@ const VoteLists = Plugin.extend({
     this.users = null
   },
 
-  onEnter(e) {
-    let vote = $(e.target).closest('.crowd-response')
-    let type = vote.attr('id')
+  onEnter (e) {
+    const vote = $(e.target).closest('.crowd-response')
+    const type = vote.attr('id')
 
     $('.crowd-response').removeClass('extplug-vote-hover')
     vote.addClass('extplug-vote-hover')
@@ -79,14 +79,13 @@ const VoteLists = Plugin.extend({
 
     if (plugSettings.get('videoOnly')) {
       // cover only a single vote button
-      let width = vote.width()
+      const width = vote.width()
       this.$wrap
         .css('left', `${vote.position().left}px`)
         .css('width', `${width}px`)
 
       this.$wrap.toggleClass('corner', width < 200)
-    }
-    else {
+    } else {
       // cover entire vote area
       this.$wrap
         .removeClass('corner')
@@ -96,7 +95,7 @@ const VoteLists = Plugin.extend({
     this.users.setFilter(filters[type])
     this.view.draw()
   },
-  onLeave() {
+  onLeave () {
     $('.crowd-response').removeClass('extplug-vote-hover')
     this.$wrap.css('display', 'none')
   }

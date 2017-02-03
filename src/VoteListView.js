@@ -5,7 +5,7 @@ import Events from 'plug/core/Events'
 import RolloverEvent from 'plug/events/ShowUserRolloverEvent'
 
 class VoteRowView extends UserRowView {
-  onClick() {
+  onClick () {
     Events.dispatch(new RolloverEvent(RolloverEvent.SHOW, this.model, {
       x: this.$el.parents('.extplug-vote-list').offset().left - 5,
       y: this.$el.offset().top + 1
@@ -15,15 +15,15 @@ class VoteRowView extends UserRowView {
 
 const VoteListView = UserListView.extend({
   RowClass: VoteRowView,
-  initialize() {
+  initialize () {
     this._super()
     this.draw = throttle(this.draw, 120)
     // TODO _probably_ unnecessary--FilteredCollection should deal with this?
     this.collection.on('change:vote change:grab', this.draw, this)
   },
-  remove() {
+  remove () {
     this.collection.off('change:vote change:grab', this.draw)
-  },
+  }
 })
 
 export default VoteListView

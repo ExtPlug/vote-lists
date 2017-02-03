@@ -9,15 +9,14 @@ export default class OnceFilteredCollection extends FilteredCollection {
   // adding new ones.
   // this saves a filter run because FilteredCollection immediately refilters
   // after removing a filter, and then again after adding a new filter.
-  setFilter(filter) {
+  setFilter (filter) {
     if (this.hasFilter(this.defaultFilterName)) {
       this._filters[this.defaultFilterName] = {
         fn: filter,
         keys: null
       }
       this.refilter()
-    }
-    else {
+    } else {
       this.filterBy(filter)
     }
     return this
