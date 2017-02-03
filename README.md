@@ -13,7 +13,7 @@ You can install this plugin by going to your ExtPlug settings menu, pressing
 "Install Plugin", and entering this Plugin URL:
 
 ```
-https://extplug.github.io/vote-lists/build/vote-lists.js;extplug/vote-lists/main
+https://unpkg.com/extplug-vote-lists
 ```
 
 ## Alternative Designs
@@ -25,12 +25,19 @@ plugin can be found on the [Wiki](https://github.com/ExtPlug/vote-lists/wiki/Alt
 
 **Note: this section is intended for developers only.**
 
-This plugin uses NPM for dependency management and `gulp` for building.
+First, install dependencies:
 
-```
+```bash
 npm install
-gulp build
 ```
+
+Then, use:
+
+```bash
+npm run build
+```
+
+The plugin will be built using the [ExtPlug CLI](https://github.com/extplug/extplug-cli).
 
 The built plugin will be stored at `build/vote-lists.js`.
 

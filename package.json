@@ -3,16 +3,25 @@
   "version": "0.1.1",
   "license": "MIT",
   "description": "ExtPlug plugin that shows a list of users when hovering vote buttons.",
+  "author": "ReAnna <renee@kooi.me>",
+  "main": "build/vote-lists.js",
+  "repository": "extplug/vote-lists",
   "keywords": [
-    "extplug-plugin"
+    "extplug-plugin",
+    "plug.dj"
+  ],
+  "files": [
+    "build",
+    "src"
   ],
   "dependencies": {
     "backbone-filtered-collection": "^0.4.0"
   },
-  "scripts": {
-    "build": "extplug bundle src/main.js build/vote-lists.js"
-  },
   "devDependencies": {
-    "extplug-cli": "^1.1.0"
+    "extplug-cli": "^1.0.0"
+  },
+  "scripts": {
+    "prepublish": "npm run build -- --minify",
+    "build": "extplug bundle src/main.js build/vote-lists.js"
   }
 }
